@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  repository: 09naveen/config-server
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8888
+
+env:
+  GIT_URI: https://github.com/naveenkatoch12609/config-server.git
+
+resources: {}

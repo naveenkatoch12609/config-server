@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "config-server.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "config-server.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "config-server.name" . }}
+    spec:
+      containers:
+        - name: config-server
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8888
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: native
+            - name: GIT_URI
+              value: {{ .Values.env.GIT_URI }}
