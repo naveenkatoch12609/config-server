@@ -10,6 +10,6 @@ service:
   port: 8888
 
 env:
-  GIT_URI: https://github.com/naveenkatoch12609/config-server.git
+  GIT_URI: https://github.com/naveenkatoch12609/config-repo.git
 
 resources: {}
