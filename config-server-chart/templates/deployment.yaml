@@ -19,7 +19,8 @@ spec:
           ports:
             - containerPort: 8888
           env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: native
-            - name: GIT_URI
-              value: {{ .Values.env.GIT_URI }}
+            {{- range .Values.env }}
+              - name: {{ .name }}
+                value: {{ .value | quote }}
+            {{- end }}
+
