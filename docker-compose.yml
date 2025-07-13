@@ -1,10 +1,15 @@
+version: '3.8'
+
 services:
-  order-service:
+  config-server:
+    image: naveenkumar/config-server:1.0.0  # 👈 Explicit image name
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: config-service
+    container_name: config-server
     ports:
       - "8888:8888"
     extra_hosts:
       - "host.docker.internal:host-gateway"  # ⬅ for Linux
+    environment:
+      SPRING_CLOUD_CONFIG_SERVER_GIT_URI: https://github.com/naveenkatoch12609/config-repo.git

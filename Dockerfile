@@ -1,26 +1,14 @@
-# Use a lightweight OpenJDK base image
-FROM eclipse-temurin:17-jdk as builder
-
-# Set working directory
-WORKDIR /app
-
-# Copy your Maven/Gradle wrapper files and project files
-COPY . .
-
-# Build the Spring Boot JAR using Maven (skip tests for speed)
-RUN ./mvnw clean package -DskipTests
-
-# ---- Create final image ----
+# 1. Use a base image with Java 17
 FROM eclipse-temurin:17-jdk
 
-# Create app directory
+# 2. Set working directory inside the container
 WORKDIR /app
 
-# Copy the fat JAR from the builder image
-COPY --from=builder /app/target/config-server-*.jar app.jar
+# 3. Copy your built JAR file into the container
+COPY target/config-server-0.0.1-SNAPSHOT.jar config-server.jar
 
-# Expose the config server port
+# 4. Expose the port your app uses
 EXPOSE 8888
 
-# Set entrypoint to run the Spring Boot app
+# 5. Command to run your app
 ENTRYPOINT ["java", "-jar", "config-server.jar"]
